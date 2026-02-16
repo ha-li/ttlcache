@@ -9,7 +9,7 @@ import (
 func main() {
 	keys := []string{"apple", "orange", "bakeyr"}
 
-	cache := cache.NewTtl(keys)
+	cache := cache.NewTtl(keys, cache.WithTTL(35))
 	for i := 0; i < 10; i++ {
 		for _, key := range keys {
 			v, _ := cache.Get(key)
@@ -18,5 +18,8 @@ func main() {
 		fmt.Println("--------------------------------")
 		time.Sleep(8 * time.Second)
 	}
+
+	cache.Stop()
+	time.Sleep(1 * time.Millisecond) // Give the janitor a moment to print "stopping janitor"
 	// fmt.Println("Hello World")
 }
